@@ -69,7 +69,7 @@
       <nav id="header-nav" class="navbar navbar-expand-lg">
         <div class="container-fluid">
           <a class="navbar-brand" href="index.html">
-            <img src="{{asset('assets/landing_pages/logo/bossq-parfume-logo.svg')}}" class="logo" width="150" height="150">
+            <img src="{{asset('assets/landing_pages/logo/bossq-logo-landing-head.png')}}" class="logo" width="150" height="50" >
           </a>
           <button class="navbar-toggler d-flex d-lg-none order-3 p-2 border-0 shadow-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#bdNavbar" aria-controls="bdNavbar" aria-expanded="false" aria-label="Toggle navigation">
             <svg class="navbar-icon" width="20" height="20">
@@ -79,7 +79,7 @@
           <div class="offcanvas offcanvas-end" tabindex="-1" id="bdNavbar" aria-labelledby="bdNavbarOffcanvasLabel">
             <div class="offcanvas-header px-4 pb-0">
               <a class="navbar-brand" href="index.html">
-                <img src="{{ asset('assets/landing_pages/logo/bossq-parfume-logo.svg') }}" class="logo" alt="logo">
+                <img src="{{ asset('assets/landing_pages/logo/bossq-logo-landing-head.png') }}" class="logo" alt="logo" width="150" height="50">
               </a>
               <button type="button" class="btn-close btn-close-black" data-bs-dismiss="offcanvas" aria-label="Close" data-bs-target="#bdNavbar"></button>
             </div>
