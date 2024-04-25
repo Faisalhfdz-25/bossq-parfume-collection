@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no"
         name="viewport">
-    <title>Login &mdash; Stisla</title>
+    <title>Login &mdash; Bossq Parfume Collection</title>
 
     <!-- General CSS Files -->
     <link rel="stylesheet"
@@ -33,9 +33,10 @@
             <div class="d-flex align-items-stretch flex-wrap">
                 <div class="col-lg-4 col-md-6 col-12 order-lg-1 min-vh-100 order-2 bg-white">
                     <div class="m-3 p-4">
-                        <img src="{{ asset('img/stisla-fill.svg') }}"
+                        <img src="{{ asset('img/bossq-parfume-logo.svg') }}"
                             alt="logo"
-                            width="80"
+                            width="200"
+                            height="180"
                             class="shadow-light rounded-circle mb-5 mt-2">
                         <h4 class="text-dark font-weight-normal">Welcome to <span class="font-weight-bold">BossQ Parfume Admin</span>
                         </h4>

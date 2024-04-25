@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Ecommerce Dashboard')
+@section('title', 'Bossq Parfume Collection-Admin')
 
 @push('style')
     <!-- CSS Libraries -->
