@@ -1,7 +1,8 @@
 <?php
 
-use App\Http\Controllers\LandingPagesController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\LandingPagesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,7 +28,12 @@ Route::middleware(['auth','admin'])->group(function () {
     Route::get('home', function(){
         return view('pages.admin.dashboard');
     })->name('home');
+
+    
 });
+  Route::resource('user', UserController::class)->only([
+    'index', 'store', 'update', 'destroy'
+  ])->names('user');
 
 Route::prefix('landing_pages')->group(function () {
     Route::get('/', [LandingPagesController::class, 'index'])->name('landing_pages.index');
