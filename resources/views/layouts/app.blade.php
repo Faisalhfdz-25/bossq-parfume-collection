@@ -16,6 +16,9 @@
         crossorigin="anonymous"
         referrerpolicy="no-referrer" />
 
+        <!-- Tambahkan baris ini untuk ikon favicon -->
+    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
+
     @stack('style')
 
     <!-- Template CSS -->
