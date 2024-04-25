@@ -19,30 +19,33 @@
                     </li>
                 </ul>
             </li>
-            <li class="menu-header">Starter</li>
+            <li class="menu-header">Master</li>
             {{-- <li class="nav-item dropdown {{ $type_menu === 'layout' ? 'active' : '' }}"> --}}
                 <li class="nav-item dropdown">
                 <a href="#"
                     class="nav-link has-dropdown"
-                    data-toggle="dropdown"><i class="fas fa-columns"></i> <span>Layout</span></a>
+                    data-toggle="dropdown"><i class="fas fa-columns"></i> <span>Data Master</span></a>
                 <ul class="dropdown-menu">
                     <li class="{{ Request::is('layout-default-layout') ? 'active' : '' }}">
                         <a class="nav-link"
-                            href="{{ url('layout-default-layout') }}">Default Layout</a>
+                            href="{{ url('layout-default-layout') }}">Product</a>
                     </li>
                     <li class="{{ Request::is('transparent-sidebar') ? 'active' : '' }}">
                         <a class="nav-link"
-                            href="{{ url('transparent-sidebar') }}">Transparent Sidebar</a>
+                            href="{{ url('transparent-sidebar') }}">Category</a>
                     </li>
                     <li class="{{ Request::is('layout-top-navigation') ? 'active' : '' }}">
                         <a class="nav-link"
                             href="{{ url('layout-top-navigation') }}">Top Navigation</a>
                     </li>
+                    <li class="{{ Request::is('user*') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('user.index') }}">User</a>
+                    </li>
+                    
+                    
+                    
+                    
                 </ul>
-            </li>
-            <li class="{{ Request::is('blank-page') ? 'active' : '' }}">
-                <a class="nav-link"
-                    href="{{ url('blank-page') }}"><i class="far fa-square"></i> <span>Blank Page</span></a>
             </li>
             </li>
             <li class="menu-header">Landing Pages</li>

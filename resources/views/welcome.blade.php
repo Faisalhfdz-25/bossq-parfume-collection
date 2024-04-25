@@ -69,7 +69,7 @@
       <nav id="header-nav" class="navbar navbar-expand-lg">
         <div class="container-fluid">
           <a class="navbar-brand" href="index.html">
-            <img src="{{asset('assets/landing_pages/logo/bossq-parfume-logo.svg')}}" class="logo" width="150" height="150">
+            <img src="{{asset('assets/landing_pages/logo/bossq-logo-landing-head.png')}}" class="logo" width="200" height="50" >
           </a>
           <button class="navbar-toggler d-flex d-lg-none order-3 p-2 border-0 shadow-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#bdNavbar" aria-controls="bdNavbar" aria-expanded="false" aria-label="Toggle navigation">
             <svg class="navbar-icon" width="20" height="20">
@@ -79,7 +79,7 @@
           <div class="offcanvas offcanvas-end" tabindex="-1" id="bdNavbar" aria-labelledby="bdNavbarOffcanvasLabel">
             <div class="offcanvas-header px-4 pb-0">
               <a class="navbar-brand" href="index.html">
-                <img src="{{ asset('assets/landing_pages/logo/bossq-parfume-logo.svg') }}" class="logo" alt="logo">
+                <img src="{{ asset('assets/landing_pages/logo/bossq-logo-landing-head.png') }}" class="logo" alt="logo" width="150" height="50">
               </a>
               <button type="button" class="btn-close btn-close-black" data-bs-dismiss="offcanvas" aria-label="Close" data-bs-target="#bdNavbar"></button>
             </div>
@@ -120,7 +120,7 @@
         <div class="row g-md-5 align-items-center">
           <div class="col-lg-5 col-md-12">
             <div class="banner-image">
-              <img src="{{asset('assets/landing_pages/images/banner-image1.png')}}" alt="banner" class="img-fluid">
+              <img src="{{asset('assets/landing_pages/images/banner-image3.png')}}" alt="banner" class="img-fluid" style="height: 500px; width: 380px;" >
             </div>
           </div>
           <div class="col-lg-7 col-md-12">
@@ -163,7 +163,7 @@
           </div>
           <div class="col-lg-4">
             <div class="image-holder text-center">
-              <img src="{{asset('assets/landing_pages/images/single-image1.png')}}" alt="headphone" class="img-fluid">
+              <img src="{{asset('assets/landing_pages/images/single-image2.png')}}" alt="headphone" class="img-fluid">
             </div>
           </div>
           <div class="col-lg-4">
