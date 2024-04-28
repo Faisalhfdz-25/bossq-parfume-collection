@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('transactions', function (Blueprint $table) {
+       Schema::create('transactions', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('users_id');
             $table->text('address');
@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('payment')->default('MANUAL');
             $table->softDeletes();
             $table->timestamps();
-        });
+        }); 
     }
 
     /**
