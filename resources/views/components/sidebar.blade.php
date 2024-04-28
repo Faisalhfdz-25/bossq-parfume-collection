@@ -29,10 +29,8 @@
                     <li class="{{ Request::is('products') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('products.index') }}">Product</a>
                     </li>
-                    
-                    <li class="{{ Request::is('transparent-sidebar') ? 'active' : '' }}">
-                        <a class="nav-link"
-                            href="{{ url('transparent-sidebar') }}">Category</a>
+                    <li class="{{ Request::is('categories') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('categories.index') }}">Category</a>
                     </li>
                     <li class="{{ Request::is('user*') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('user.index') }}">Galleri</a>
