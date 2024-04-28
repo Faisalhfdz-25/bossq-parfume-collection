@@ -60,7 +60,8 @@
                                                         class="d-inline">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button type="button" class="btn btn-danger btn-sm delete-user">
+                                                        <button type="submit" class="btn btn-danger btn-sm delete-user"
+                                                            onclick="deleteUser(event, {{ $user->id }})">
                                                             <i class="fa-solid fa-trash-can"></i>
                                                         </button>
                                                     </form>
@@ -225,27 +226,27 @@
     <script src="https://cdn.datatables.net/1.11.6/js/jquery.dataTables.min.js"></script>
 
     <script>
-        $(document).ready(function() {
-            // Sweet Alert for delete confirmation
-            $('.delete-user').click(function() {
-                var userId = $(this).data('user-id');
-                Swal.fire({
-                    title: 'Are you sure?',
-                    text: 'You will not be able to recover this user!',
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#d33',
-                    cancelButtonColor: '#3085d6',
-                    confirmButtonText: 'Yes, delete it!',
-                    cancelButtonText: 'Cancel'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        // Submit the delete form
-                        $('#delete-form-' + userId).submit();
-                    }
-                });
-            });
+        function deleteUser(event, userId) {
+            event.preventDefault(); // Prevent default form submission
 
+            Swal.fire({
+                title: 'Are you sure?',
+                text: 'You will not be able to recover this user!',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Submit the delete form
+                    $('#delete-form-' + userId).submit();
+                }
+            });
+        }
+
+        $(document).ready(function() {
             // Handle success message after deletion
             var successMessage = '{{ session('success') }}';
             if (successMessage) {
@@ -265,7 +266,6 @@
                     backdrop: false
                 });
             });
-
         });
     </script>
 @endpush
