@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\LandingPagesController;
+use App\Http\Controllers\ProductCategoryController;
 use App\Http\Controllers\ProductController;
 
 /*
@@ -31,6 +31,7 @@ Route::middleware(['auth','admin'])->group(function () {
     })->name('home');
 
     Route::resource('products', ProductController::class);
+    Route::resource('categories', ProductCategoryController::class);
     Route::resource('user', UserController::class)->only([
       'index', 'store', 'update', 'destroy'
     ])->names('user');
