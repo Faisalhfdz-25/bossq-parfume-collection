@@ -61,7 +61,7 @@ class ProductCategoryController extends Controller
 
         ProductCategory::create([
             'name' => $request->name,
-            'url' => $imagePath,
+            'url' => basename($imagePath),
         ]);
 
         return redirect()->route('categories.index')->with('success', 'Category created successfully!');
@@ -83,11 +83,11 @@ class ProductCategoryController extends Controller
 
         if ($request->hasFile('url')) {
             // Delete existing image file
-            Storage::delete($category->url);
+            Storage::delete('public/category_image/' . $category->url);
             
             // Upload and store new image file
             $imagePath = $request->file('url')->store('public/category_image');
-            $category->url = $imagePath;
+            $category->url = basename($imagePath);
         }
 
         $category->name = $request->name;
@@ -104,7 +104,7 @@ class ProductCategoryController extends Controller
         $category->delete();
 
         // Delete the image file associated with the category
-        Storage::delete($category->url);
+        Storage::delete('public/category_image/' . $category->url);
 
         // Redirect back to category index page with success message
         return redirect()->route('categories.index')->with('success', 'Category deleted successfully!');

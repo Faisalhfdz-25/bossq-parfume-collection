@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductCategoryController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProductGalleryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,6 +33,7 @@ Route::middleware(['auth','admin'])->group(function () {
 
     Route::resource('products', ProductController::class);
     Route::resource('categories', ProductCategoryController::class);
+    Route::resource('product-galleries', ProductGalleryController::class);
     Route::resource('user', UserController::class)->only([
       'index', 'store', 'update', 'destroy'
     ])->names('user');
