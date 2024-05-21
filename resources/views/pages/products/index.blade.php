@@ -124,11 +124,6 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <label for="category_id">Image</label>
-                                <div class="custom-file">
-                                    <input type="file" class="custom-file-input" id="image" name="image" required>
-                                    <label class="custom-file-label" for="image">Choose file</label>
-                                </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
