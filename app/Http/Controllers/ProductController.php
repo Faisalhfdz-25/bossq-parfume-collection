@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Models\ProductCategory;
+use App\Models\ProductGallery;
+use App\Models\Supplier; // Pastikan Anda telah menambahkan model Supplier
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Validator;
 
@@ -35,10 +37,20 @@ class ProductController extends Controller
                 ->make();
         }
 
-        $products = Product::with('category')->get();
-        $categories = ProductCategory::all();  // Menyediakan data produk untuk view
-        return view('pages.products.index', compact('products', 'categories'));
+        $products = Product::with('category', 'supplier')->get(); // Menambahkan relasi supplier
+        $categories = ProductCategory::all();
+        $suppliers = Supplier::all(); // Menyediakan data supplier untuk view
+        return view('pages.products.index', compact('products', 'categories', 'suppliers'));
     }
+
+    public function show(Product $product)
+    {
+        // Ambil semua galeri terkait dengan produk
+        $galleries = ProductGallery::where('products_id', $product->id)->get();
+
+        return view('pages.products.detail', compact('product', 'galleries'));
+    }
+
 
     /**
      * Store a newly created resource in storage.
@@ -47,8 +59,11 @@ class ProductController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
-            'categories_id' => 'required|exists:product_categories,id',
+            'categories_id' => 'required',
+            'supplier_id' => 'required|exists:suppliers,id', // Menambahkan validasi supplier_id
             'price' => 'required|numeric|min:0',
+            'stock' => 'required|integer|min:0', // Menambahkan validasi stock
+            'status' => 'required', // Menambahkan validasi status
             'description' => 'nullable|string',
             'tags' => 'nullable|string',
         ]);
@@ -66,8 +81,13 @@ class ProductController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
-            'categories_id' => 'required|exists:product_categories,id', // Ubah 'category' menjadi 'category_id'
+            'categories_id' => 'required',
+            'supplier_id' => 'required|exists:suppliers,id', // Menambahkan validasi supplier_id
             'price' => 'required|numeric|min:0',
+            'stock' => 'required|integer|min:0', // Menambahkan validasi stock
+            'status' => 'required', // Menambahkan validasi status
+            'description' => 'nullable|string',
+            'tags' => 'nullable|string',
         ]);
 
         if ($validator->fails()) {
@@ -78,7 +98,6 @@ class ProductController extends Controller
 
         return redirect()->route('products.index')->with('success', 'Product updated successfully!');
     }
-
 
     /**
      * Remove the specified resource from storage.

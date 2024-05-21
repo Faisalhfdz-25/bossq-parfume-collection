@@ -1,10 +1,12 @@
 <?php
 
+use App\Http\Controllers\GalleryController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductCategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductGalleryController;
+use App\Http\Controllers\SupplierController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,18 +35,16 @@ Route::middleware(['auth','admin'])->group(function () {
 
     Route::resource('products', ProductController::class);
     Route::resource('categories', ProductCategoryController::class);
-    Route::resource('product-galleries', ProductGalleryController::class);
+    
     Route::resource('user', UserController::class)->only([
       'index', 'store', 'update', 'destroy'
     ])->names('user');
+    Route::resource('suppliers', SupplierController::class);
     
+
+    Route::controller(GalleryController::class)->group(function () {
+        Route::get('/gallery', 'index');
+        Route::post('/gallery/simpan', 'simpan');
+    });
 });
 
-// Route::prefix('landing_pages')->group(function () {
-//     Route::get('/', [LandingPagesController::class, 'index'])->name('landing_pages.index');
-//     Route::get('/create',[LandingPagesController::class, 'create'])->name('landing_pages.create');
-//     Route::post('/', [LandingPagesController::class, 'store'])->name('landing_pages.store');
-//     Route::get('/{id}/edit', [LandingPagesController::class, 'edit'])->name('landing_pages.edit');
-//     Route::put('/{id}', [LandingPagesController::class, 'update'])->name('landing_pages.update');
-//     Route::delete('/{id}',[LandingPagesController::class, 'destroy'])->name('landing_pages.destroy');
-// });
