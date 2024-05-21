@@ -32,8 +32,11 @@
                     <li class="{{ Request::is('categories') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('categories.index') }}">Category</a>
                     </li>
-                    <li class="{{ Request::is('product-galleries') ? 'active' : '' }}">
+                    {{-- <li class="{{ Request::is('product-galleries') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('product-galleries.index') }}">Galleri</a>
+                    </li> --}}
+                    <li class="{{ Request::is('suppliers') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('suppliers.index') }}">Suppliers</a>
                     </li>
                     <li class="{{ Request::is('user*') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('user.index') }}">User</a>

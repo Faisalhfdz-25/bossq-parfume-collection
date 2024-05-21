@@ -15,7 +15,7 @@
             </div>
 
             <div class="section-body">
-                <div class="card">
+                <div class="card">  
                     <div class="card-body">
                         <!-- Button trigger modal for creating gallery -->
                         <button type="button" class="btn btn-primary mb-3" data-toggle="modal"

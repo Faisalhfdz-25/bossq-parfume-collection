@@ -11,13 +11,12 @@
     <div class="main-content">
         <section class="section">
             <div class="section-header">
-                <h1>Products Table</h1>
+                <h1>Product Table</h1>
             </div>
 
             <div class="section-body">
                 <div class="card">
                     <div class="card-body">
-                        <!-- Button trigger modal for creating user -->
                         <button type="button" class="btn btn-primary mb-3" data-toggle="modal"
                             data-target="#createProductModal">
                             <i class="fa-solid fa-plus" style="color: #ffffff;"></i> Create Product
@@ -28,32 +27,44 @@
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Name</th>
-                                        <th>Category</th>
-                                        <th>Price</th>
-                                        <th>Tags</th>
+                                        <th>Nama</th>
+                                        <th>Stand</th>
+                                        <th>Supplier</th>
+                                        <th>Harga</th>
+                                        <th>Stok</th>
+                                        <th>Status</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @php $count = 1; @endphp
+                                    @php
+                                        $counter = 1;
+                                    @endphp
                                     @foreach ($products as $product)
                                         <tr>
-                                            <td>{{ $count }}</td>
+                                            <td>{{ $counter++ }}</td>
                                             <td>{{ $product->name }}</td>
-                                            <td>{{ optional($product->category)->name }}</td>
-                                            <td>{{ number_format($product->price, 0, ',', '.') }}</td>
-                                            <td>{{ $product->tags }}</td>
+                                            <td>{{ $product->category->name }}</td>
+                                            <td>{{ optional($product->supplier)->name }}</td>
+                                            <td>{{ 'Rp ' . number_format($product->price, 0, ',', '.') }}</td>
+                                            <td>{{ $product->stock }}</td>
+                                            <td>{!! $product->status == 'ready'
+                                                ? '<span class="badge badge-success">Ready</span>'
+                                                : '<span class="badge badge-secondary">Habis</span>' !!}</td>
+
                                             <td>
                                                 <div class="d-flex">
-                                                    <!-- Button trigger modal for editing product -->
+                                                    <a href="{{ route('products.show', $product->id) }}"
+                                                        class="btn btn-primary btn-sm mr-2" title="View Detail">
+                                                        <i class="fa-solid fa-eye"></i>
+                                                    </a>
                                                     <button type="button" class="btn btn-warning btn-sm edit-product mr-2"
                                                         data-toggle="modal"
                                                         data-target="#editProductModal{{ $product->id }}"
                                                         data-product-id="{{ $product->id }}" data-backdrop="false">
                                                         <i class="fa-solid fa-pen-to-square"></i>
                                                     </button>
-                                                    <!-- Delete Product Form -->
+
                                                     <form id="delete-form-{{ $product->id }}"
                                                         action="{{ route('products.destroy', $product->id) }}"
                                                         method="POST" class="d-inline">
@@ -67,7 +78,6 @@
                                                 </div>
                                             </td>
                                         </tr>
-                                        @php $count++; @endphp
                                     @endforeach
                                 </tbody>
                             </table>
@@ -81,72 +91,99 @@
     <!-- Modal for creating product -->
     <div class="modal fade" id="createProductModal" tabindex="-1" role="dialog" aria-labelledby="createProductModalLabel"
         aria-hidden="true">
-        <!-- Modal content goes here -->
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="createUserModalLabel">Add Products</h5>
+                    <h5 class="modal-title" id="createProductModalLabel">Create Product</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <!-- Form for creating product -->
-                                <form action="{{ route('products.store') }}" method="POST">
-                                    @csrf
-                                    <div class="form-group">
-                                        <label for="name">Name</label>
-                                        <input type="text" name="name" id="name" class="form-control" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="categories_id">Category</label>
-                                        <select name="categories_id" id="categories_id" class="form-control" required>
-                                            @foreach ($categories as $category)
-                                                <option value="{{ $category->id }}">{{ $category->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-
-                            </div>
-                            <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <form action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data">
+                                @csrf
                                 <div class="form-group">
-                                    <label for="price">Price</label>
+                                    <label for="name">Name</label>
+                                    <input type="text" name="name" id="name" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="categories_id">Category</label>
+                                    <select name="categories_id" id="categories_id" class="form-control" required>
+                                        @foreach ($categories as $category)
+                                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="supplier_id">Supplier</label>
+                                    <select name="supplier_id" id="supplier_id" class="form-control" required>
+                                        @foreach ($suppliers as $supplier)
+                                            <option value="{{ $supplier->id }}">{{ $supplier->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <label for="category_id">Image</label>
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="image" name="image" required>
+                                    <label class="custom-file-label" for="image">Choose file</label>
+                                </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="price">Harga</label>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Rp</span>
+                                    </div>
                                     <input type="text" name="price" id="price" class="form-control" required>
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">.00</span>
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <label for="tags">Tags</label>
-                                    <input type="text" name="tags" id="tags" class="form-control">
-                                </div>
-
                             </div>
-                            <div class="col">
-                                <div class="form-group">
-                                    <label for="description">Description</label>
-                                    <textarea name="description" id="description" class="form-control" cols="50" rows="5"></textarea>
+                            
+                            <div class="form-group">
+                                <label for="stock">Stock</label>
+                                <input type="text" name="stock" id="stock" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Status</label>
+                                <div class="selectgroup w-100">
+                                    <label class="selectgroup-item">
+                                        <input type="radio" name="status" value="ready" class="selectgroup-input"
+                                            checked="">
+                                        <span class="selectgroup-button">Ready</span>
+                                    </label>
+                                    <label class="selectgroup-item">
+                                        <input type="radio" name="status" value="habis" class="selectgroup-input">
+                                        <span class="selectgroup-button">Habis</span>
+                                    </label>
                                 </div>
                             </div>
                         </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="description">Description</label>
+                                <textarea name="description" id="description" class="form-control"></textarea>
+                            </div>
+                        </div>
                     </div>
+                    <button type="submit" class="btn btn-primary">Create Product</button>
+                    </form>
                 </div>
-
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Create User</button>
-                </div>
-                </form>
             </div>
         </div>
     </div>
-    </div>
 
+
+    
     <!-- Modals for editing products -->
     @foreach ($products as $product)
+        <!-- Modal for editing product -->
         <div class="modal fade" id="editProductModal{{ $product->id }}" tabindex="-1" role="dialog"
             aria-labelledby="editProductModalLabel{{ $product->id }}" aria-hidden="true">
-            <!-- Modal content goes here -->
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -156,59 +193,103 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <!-- Form for editing product -->
-                                    <form action="{{ route('products.update', $product->id) }}" method="POST">
-                                        @csrf
-                                        @method('PUT') <!-- Gunakan metode PUT untuk mengirimkan permintaan pembaruan -->
-                    
-                                        <div class="form-group">
-                                            <label for="name">Name</label>
-                                            <input type="text" name="name" id="name" class="form-control" value="{{ $product->name }}" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="categories_id">Category</label>
-                                            <select name="categories_id" id="categories_id" class="form-control" required>
-                                                @foreach ($categories as $category)
-                                                    <option value="{{ $category->id }}" {{ $product->category_id == $category->id ? 'selected' : '' }}>
-                                                        {{ $category->name }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                </div>
-                                <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <form id="editProductForm{{ $product->id }}"
+                                    action="{{ route('products.update', $product->id) }}" method="POST"
+                                    enctype="multipart/form-data">
+                                    @csrf
+                                    @method('PUT')
                                     <div class="form-group">
-                                        <label for="price">Price</label>
-                                        <input type="text" name="price" id="price" class="form-control" value="{{ $product->price }}" required>
+                                        <label for="edit_name{{ $product->id }}">Name</label>
+                                        <input type="text" name="name" id="edit_name{{ $product->id }}"
+                                            class="form-control" value="{{ $product->name }}" required>
                                     </div>
                                     <div class="form-group">
-                                        <label for="tags">Tags</label>
-                                        <input type="text" name="tags" id="tags" class="form-control" value="{{ $product->tags }}">
+                                        <label for="edit_categories_id{{ $product->id }}">Categoy</label>
+                                        <select name="categories_id" id="edit_categories_id{{ $product->id }}"
+                                            class="form-control" required>
+                                            @foreach ($categories as $category)
+                                                <option value="{{ $category->id }}"
+                                                    {{ $category->id == $product->category_id ? 'selected' : '' }}>
+                                                    {{ $category->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="edit_supplier_id{{ $product->id }}">Supplier</label>
+                                        <select name="supplier_id" id="edit_supplier_id{{ $product->id }}"
+                                            class="form-control" required>
+                                            @foreach ($suppliers as $supplier)
+                                                <option value="{{ $supplier->id }}"
+                                                    {{ $supplier->id == $product->supplier_id ? 'selected' : '' }}>
+                                                    {{ $supplier->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="edit_image{{ $product->id }}">Image</label>
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input"
+                                                id="edit_image{{ $product->id }}" name="image">
+                                            <label class="custom-file-label" for="edit_image{{ $product->id }}">Choose
+                                                file</label>
+                                        </div>
+                                    </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="edit_price{{ $product->id }}">Harga</label>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Rp</span>
+                                        </div>
+                                        <input type="text" name="price" id="edit_price{{ $product->id }}" class="form-control" value="{{ $product->price }}" required>
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">.00</span>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col">
-                                    <div class="form-group">
-                                        <label for="description">Description</label>
-                                        <textarea name="description" id="description" class="form-control" cols="50" rows="5">{{ $product->description }}</textarea>
+                                
+                                <div class="form-group">
+                                    <label for="edit_stock{{ $product->id }}">Stock</label>
+                                    <input type="text" name="stock" id="edit_stock{{ $product->id }}"
+                                        class="form-control" value="{{ $product->stock }}" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Status</label>
+                                    <div class="selectgroup w-100">
+                                        <label class="selectgroup-item">
+                                            <input type="radio" name="status" value="ready"
+                                                class="selectgroup-input" id="edit_status_active{{ $product->id }}"
+                                                {{ $product->status == 'ready' ? 'checked' : '' }}>
+                                            <span class="selectgroup-button">Ready</span>
+                                        </label>
+                                        <label class="selectgroup-item">
+                                            <input type="radio" name="status" value="habis"
+                                                class="selectgroup-input" id="edit_status_inactive{{ $product->id }}"
+                                                {{ $product->status == 'habis' ? 'checked' : '' }}>
+                                            <span class="selectgroup-button">Habis</span>
+                                        </label>
                                     </div>
                                 </div>
                             </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="edit_description{{ $product->id }}">Description</label>
+                                    <textarea name="description" id="edit_description{{ $product->id }}" class="form-control">{{ $product->description }}</textarea>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-primary">Update Product</button>
+                        </form>
                     </div>
-                    </form>
                 </div>
             </div>
         </div>
     @endforeach
-
 @endsection
 
 @push('scripts')
@@ -239,6 +320,15 @@
         }
 
         $(document).ready(function() {
+            // Function to handle displaying Sweet Alert for errors
+            function showErrorAlert(errorMessage) {
+                Swal.fire({
+                    title: 'Error!',
+                    html: errorMessage,
+                    icon: 'error'
+                });
+            }
+
             // Handle success message after deletion
             var successMessage = '{{ session('success') }}';
             if (successMessage) {
@@ -250,13 +340,28 @@
                 });
             }
 
-            // Handle modal for editing product
-            $('.edit-product').click(function() {
-                var productId = $(this).data('product-id');
-                $('#editProductModal' + productId).modal({
-                    show: true,
-                    backdrop: false
-                });
+            // Ajax setup for handling errors
+            $.ajaxSetup({
+                error: function(xhr) {
+                    var errorMessage = '';
+                    if (xhr.responseJSON && xhr.responseJSON.errors) {
+                        // If there are validation errors, display validation error message
+                        var errors = xhr.responseJSON.errors;
+                        errorMessage = '<ul>';
+                        $.each(errors, function(key, value) {
+                            errorMessage += '<li>' + value + '</li>';
+                        });
+                        errorMessage += '</ul>';
+                    } else if (xhr.responseJSON && xhr.responseJSON.error) {
+                        // If there is an error message, display it
+                        errorMessage = xhr.responseJSON.error;
+                    } else {
+                        // If no defined error message, display a generic error message
+                        errorMessage = 'An error occurred. Please try again later.';
+                    }
+                    // Show the error message using Sweet Alert
+                    showErrorAlert(errorMessage);
+                }
             });
         });
     </script>

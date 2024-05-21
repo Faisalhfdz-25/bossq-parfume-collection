@@ -16,6 +16,9 @@ class Product extends Model
         'price',
         'categories_id',
         'tags',
+        'supplier_id',
+        'stock',
+        'status'
     ];
 
     public function galleries()
@@ -28,4 +31,8 @@ class Product extends Model
         return $this->belongsTo(ProductCategory::class, 'categories_id', 'id');
     }
 
+    public function supplier()
+    {
+        return $this->belongsTo(Supplier::class);
+    }
 }
