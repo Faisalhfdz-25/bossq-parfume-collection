@@ -1,12 +1,13 @@
 <?php
 
-use App\Http\Controllers\GalleryController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\ProductCategoryController;
+use App\Http\Controllers\StockController;
+use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\ProductController;
-use App\Http\Controllers\ProductGalleryController;
 use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\ProductGalleryController;
+use App\Http\Controllers\ProductCategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,7 +42,9 @@ Route::middleware(['auth','admin'])->group(function () {
     ])->names('user');
     Route::resource('suppliers', SupplierController::class);
     
+    Route::post('/stock', [StockController::class, 'store'])->name('stock.store');
 
+        
     Route::controller(GalleryController::class)->group(function () {
         Route::get('/gallery', 'index');
         Route::post('/gallery/simpan', 'simpan');
