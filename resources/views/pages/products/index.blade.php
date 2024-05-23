@@ -17,10 +17,17 @@
             <div class="section-body">
                 <div class="card">
                     <div class="card-body">
-                        <button type="button" class="btn btn-primary mb-3" data-toggle="modal"
-                            data-target="#createProductModal">
-                            <i class="fa-solid fa-plus" style="color: #ffffff;"></i> Create Product
-                        </button>
+                        <div class="d-flex justify-content-between">
+                            <button type="button" class="btn btn-primary mb-3" data-toggle="modal"
+                                data-target="#createProductModal">
+                                <i class="fa-solid fa-plus" style="color: #ffffff;"></i> Create Product
+                            </button>
+
+                            <button type="button" class="btn btn-secondary mb-3" data-toggle="modal"
+                                data-target="#stockInModal">
+                                <i class="fa-solid fa-box" style="color: #ffffff;"></i> Add Stock
+                            </button>
+                        </div>
 
                         <div class="table-responsive">
                             <table id="products-table" class="table table-bordered">
@@ -124,11 +131,6 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <label for="category_id">Image</label>
-                                <div class="custom-file">
-                                    <input type="file" class="custom-file-input" id="image" name="image" required>
-                                    <label class="custom-file-label" for="image">Choose file</label>
-                                </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
@@ -143,7 +145,7 @@
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <div class="form-group">
                                 <label for="stock">Stock</label>
                                 <input type="text" name="stock" id="stock" class="form-control" required>
@@ -177,8 +179,50 @@
         </div>
     </div>
 
+    <!-- Modal for adding stock -->
+    <div class="modal fade" id="stockInModal" tabindex="-1" role="dialog" aria-labelledby="stockInModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="stockInModalLabel">Add Stock</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="stockInForm">
+                        @csrf
+                        <div class="form-group">
+                            <label for="product_id">Product</label>
+                            <select name="product_id" id="product_id" class="form-control" required>
+                                <option value="">Select Product</option>
+                                @foreach ($products as $product)
+                                    <option value="{{ $product->id }}">{{ $product->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="supplier_id">Supplier</label>
+                            <select name="supplier_id" id="supplier_id" class="form-control" required>
+                                <option value="">Select Supplier</option>
+                                @foreach ($suppliers as $supplier)
+                                    <option value="{{ $supplier->id }}">{{ $supplier->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="quantity">Quantity</label>
+                            <input type="number" name="quantity" id="quantity" class="form-control" min="1"
+                                required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Add Stock</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    
     <!-- Modals for editing products -->
     @foreach ($products as $product)
         <!-- Modal for editing product -->
@@ -246,13 +290,14 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">Rp</span>
                                         </div>
-                                        <input type="text" name="price" id="edit_price{{ $product->id }}" class="form-control" value="{{ $product->price }}" required>
+                                        <input type="text" name="price" id="edit_price{{ $product->id }}"
+                                            class="form-control" value="{{ $product->price }}" required>
                                         <div class="input-group-append">
                                             <span class="input-group-text">.00</span>
                                         </div>
                                     </div>
                                 </div>
-                                
+
                                 <div class="form-group">
                                     <label for="edit_stock{{ $product->id }}">Stock</label>
                                     <input type="text" name="stock" id="edit_stock{{ $product->id }}"
@@ -362,6 +407,27 @@
                     // Show the error message using Sweet Alert
                     showErrorAlert(errorMessage);
                 }
+            });
+
+            // Handle stock addition form submission with AJAX
+            $('#stockInForm').on('submit', function(event) {
+                event.preventDefault();
+                $.ajax({
+                    url: '{{ route('stock.store') }}',
+                    method: 'POST',
+                    data: $(this).serialize(),
+                    success: function(response) {
+                        $('#stockInModal').modal('hide');
+                        Swal.fire({
+                            title: 'Success!',
+                            text: 'Stock has been added successfully.',
+                            icon: 'success',
+                            timer: 2000
+                        }).then(() => {
+                            location.reload(); // Reload the page to reflect the changes
+                        });
+                    }
+                });
             });
         });
     </script>
