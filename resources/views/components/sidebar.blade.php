@@ -48,6 +48,22 @@
             </li>
             </li>
             <hr width="80%">
+            <li class="menu-header">Belanja</li>
+            {{-- <li class="nav-item dropdown {{ $type_menu === 'layout' ? 'active' : '' }}"> --}}
+            <li class="nav-item dropdown">
+                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class=" fas fa-solid fa-basket-shopping"></i>
+                    <span>List Belanja</span></a>
+                <ul class="dropdown-menu">
+                    <li class="{{ Request::is('layout-default-layout') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ url('layout-default-layout') }}"><i class=" fas fa-solid fa-file-pen"></i>List Belanja</a>
+                    </li>
+                    <li class="{{ Request::is('layout-default-layout') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ url('layout-default-layout') }}"><i class="fas fa-solid fa-cart-arrow-down"></i>Barang Masuk</a>
+                    </li>
+                </ul>
+            </li>
+            </li>
+            <hr width="80%">
             <li class="menu-header">Transaksi</li>
             {{-- <li class="nav-item dropdown {{ $type_menu === 'layout' ? 'active' : '' }}"> --}}
             <li class="nav-item dropdown">
