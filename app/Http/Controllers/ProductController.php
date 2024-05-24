@@ -60,7 +60,8 @@ class ProductController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'categories_id' => 'required',
-            'supplier_id' => 'required|exists:suppliers,id', // Menambahkan validasi supplier_id
+            'supplier_id' => 'required|exists:suppliers,id',
+            'harga_modal' =>'required' ,
             'price' => 'required|numeric|min:0',
             'stock' => 'required|integer|min:0', // Menambahkan validasi stock
             'status' => 'required', // Menambahkan validasi status

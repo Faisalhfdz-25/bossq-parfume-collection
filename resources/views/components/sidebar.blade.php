@@ -54,8 +54,8 @@
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class=" fas fa-solid fa-basket-shopping"></i>
                     <span>List Belanja</span></a>
                 <ul class="dropdown-menu">
-                    <li class="{{ Request::is('layout-default-layout') ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ url('layout-default-layout') }}"><i class=" fas fa-solid fa-file-pen"></i>List Belanja</a>
+                    <li class="{{ Request::is('list-belanja') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ url('/list-belanja') }}"><i class=" fas fa-solid fa-file-pen"></i>List Belanja</a>
                     </li>
                     <li class="{{ Request::is('layout-default-layout') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ url('layout-default-layout') }}"><i class="fas fa-solid fa-cart-arrow-down"></i>Barang Masuk</a>

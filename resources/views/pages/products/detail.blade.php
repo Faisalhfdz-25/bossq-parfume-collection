@@ -33,6 +33,15 @@
 
                                     </li>
                                     <li class="list-group-item">
+
+                                        <div class="d-flex justify-content-between">
+                                            <span class="label">Modal:</span>
+                                            <span class="value text-end">Rp
+                                                {{ number_format($product->harga_modal, 0, ',', '.') }}</span>
+                                        </div>
+
+                                    </li>
+                                    <li class="list-group-item">
                                         <div class="d-flex justify-content-between">
                                             <span class="label">Stock:</span>
                                             <span class="value">{{ $product->stock }}</span>
@@ -49,9 +58,13 @@
                                     <li class="list-group-item">
                                         <div class="d-flex justify-content-between">
                                             <span class="label">Status:</span>
-                                            <span class="value">{!! $product->status == 'ready'
-                                                ? '<span class="badge badge-success">Ready</span>'
-                                                : '<span class="badge badge-secondary">Habis</span>' !!}</span>
+                                            @if ($product->stock == 0)
+                                                    <span class="badge badge-secondary">Habis</span>
+                                                @elseif ($product->stock < 5)
+                                                    <span class="badge badge-warning">Mau Habis</span>
+                                                @else
+                                                    <span class="badge badge-success">Ready</span>
+                                                @endif
                                         </div>
 
                                     </li>

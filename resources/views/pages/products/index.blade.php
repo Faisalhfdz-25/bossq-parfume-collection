@@ -35,8 +35,9 @@
                                     <tr>
                                         <th>#</th>
                                         <th>Nama</th>
-                                        <th>Stand</th>
+                                        <th>Kategori</th>
                                         <th>Supplier</th>
+                                        <th>Modal</th>
                                         <th>Harga</th>
                                         <th>Stok</th>
                                         <th>Status</th>
@@ -53,11 +54,18 @@
                                             <td>{{ $product->name }}</td>
                                             <td>{{ $product->category->name }}</td>
                                             <td>{{ optional($product->supplier)->name }}</td>
+                                            <td>{{ 'Rp ' . number_format($product->harga_modal, 0, ',', '.') }}</td>
                                             <td>{{ 'Rp ' . number_format($product->price, 0, ',', '.') }}</td>
                                             <td>{{ $product->stock }}</td>
-                                            <td>{!! $product->status == 'ready'
-                                                ? '<span class="badge badge-success">Ready</span>'
-                                                : '<span class="badge badge-secondary">Habis</span>' !!}</td>
+                                            <td>
+                                                @if ($product->stock == 0)
+                                                    <span class="badge badge-secondary">Habis</span>
+                                                @elseif ($product->stock < 5)
+                                                    <span class="badge badge-warning">Mau Habis</span>
+                                                @else
+                                                    <span class="badge badge-success">Ready</span>
+                                                @endif
+                                            </td>
 
                                             <td>
                                                 <div class="d-flex">
@@ -165,7 +173,20 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="price">Modal</label>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Rp</span>
+                                    </div>
+                                    <input type="text" name="harga_modal" id="harga_modal" class="form-control"
+                                        required>
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">.00</span>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="form-group">
                                 <label for="description">Description</label>
                                 <textarea name="description" id="description" class="form-control"></textarea>
