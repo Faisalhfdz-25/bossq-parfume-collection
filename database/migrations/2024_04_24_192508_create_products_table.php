@@ -17,7 +17,7 @@ return new class extends Migration
             $table->float('price');
             $table->longText('description');
             $table->string('tags')->nullable();
-            $table->bigInteger('categories_id')->nullable();
+            $table->foreignId('categories_id')->constrained('product_categories')->onDelete('cascade');
             $table->softDeletes();
             $table->timestamps();
         });

@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\StockController;
 use App\Http\Controllers\GalleryController;
+use App\Http\Controllers\ListBelanjaController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\ProductGalleryController;
@@ -48,6 +49,12 @@ Route::middleware(['auth','admin'])->group(function () {
     Route::controller(GalleryController::class)->group(function () {
         Route::get('/gallery', 'index');
         Route::post('/gallery/simpan', 'simpan');
+    });
+
+    Route::controller(ListBelanjaController::class)->group(function () {
+        Route::get('/list-belanja', 'index');
+        Route::post('/list-belanja/simpan', 'simpan');
+        Route::post('/list-belanja/ajukan', 'ajukan');
     });
 });
 

@@ -11,12 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('reviews', function (Blueprint $table) {
+        Schema::create('detail_list_belanja', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('landing_page_id');
-            $table->foreign('landing_page_id')->references('id')->on('landing_pages')->onDelete('cascade');
-            $table->string('user_name');
-            $table->text('review_text');
+            $table->foreignId('products_id')->constrained('products')->onDelete('cascade');
+            $table->integer('qty');
+            $table->integer('harga');
+            $table->string('tempat');
+            $table->integer('sub_total');
             $table->timestamps();
         });
     }
@@ -26,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('reviews');
+        Schema::dropIfExists('detail_list_belanja');
     }
 };

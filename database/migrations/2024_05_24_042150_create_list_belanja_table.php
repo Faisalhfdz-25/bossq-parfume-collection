@@ -11,12 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('overviews', function (Blueprint $table) {
+        Schema::create('list_belanja', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('landing_page_id');
-            $table->foreign('landing_page_id')->references('id')->on('landing_pages')->onDelete('cascade');
-            $table->string('title');
-            $table->text('description');
+            $table->date('tanggal');
+            $table->integer('total_items');
+            $table->integer('total_payment');
             $table->timestamps();
         });
     }
@@ -26,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('overviews');
+        Schema::dropIfExists('list_belanja');
     }
 };
