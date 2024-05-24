@@ -139,6 +139,19 @@
                                         @endforeach
                                     </select>
                                 </div>
+                                <div class="form-group">
+                                    <label for="price">Modal</label>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Rp</span>
+                                        </div>
+                                        <input type="text" name="harga_modal" id="harga_modal" class="form-control"
+                                            required>
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">.00</span>
+                                        </div>
+                                    </div>
+                                </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
@@ -172,26 +185,12 @@
                                     </label>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="price">Modal</label>
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">Rp</span>
-                                    </div>
-                                    <input type="text" name="harga_modal" id="harga_modal" class="form-control"
-                                        required>
-                                    <div class="input-group-append">
-                                        <span class="input-group-text">.00</span>
-                                    </div>
-                                </div>
-                            </div>
                             <div class="form-group">
                                 <label for="description">Description</label>
                                 <textarea name="description" id="description" class="form-control"></textarea>
                             </div>
                         </div>
+                        
                     </div>
                     <button type="submit" class="btn btn-primary">Create Product</button>
                     </form>
@@ -295,12 +294,16 @@
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <label for="edit_image{{ $product->id }}">Image</label>
-                                        <div class="custom-file">
-                                            <input type="file" class="custom-file-input"
-                                                id="edit_image{{ $product->id }}" name="image">
-                                            <label class="custom-file-label" for="edit_image{{ $product->id }}">Choose
-                                                file</label>
+                                        <label for="edit_harga_modal{{$product->id}}">Modal</label>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Rp</span>
+                                            </div>
+                                            <input type="text" name="harga_modal" id="edit_harga_modal{{ $product->id }}" class="form-control"
+                                            value="{{ $product->harga_modal }}" required>
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">.00</span>
+                                            </div>
                                         </div>
                                     </div>
                             </div>
@@ -341,13 +344,13 @@
                                         </label>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col">
                                 <div class="form-group">
                                     <label for="edit_description{{ $product->id }}">Description</label>
                                     <textarea name="description" id="edit_description{{ $product->id }}" class="form-control">{{ $product->description }}</textarea>
                                 </div>
                             </div>
+                            
+                            
                         </div>
                         <button type="submit" class="btn btn-primary">Update Product</button>
                         </form>
