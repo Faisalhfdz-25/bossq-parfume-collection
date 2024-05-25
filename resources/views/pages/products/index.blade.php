@@ -4,7 +4,7 @@
 
 @push('style')
     <!-- Include DataTables CSS -->
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.6/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.7/css/dataTables.bootstrap5.min.css">
 @endpush
 
 @section('main')
@@ -190,7 +190,7 @@
                                 <textarea name="description" id="description" class="form-control"></textarea>
                             </div>
                         </div>
-                        
+
                     </div>
                     <button type="submit" class="btn btn-primary">Create Product</button>
                     </form>
@@ -294,13 +294,14 @@
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <label for="edit_harga_modal{{$product->id}}">Modal</label>
+                                        <label for="edit_harga_modal{{ $product->id }}">Modal</label>
                                         <div class="input-group mb-3">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">Rp</span>
                                             </div>
-                                            <input type="text" name="harga_modal" id="edit_harga_modal{{ $product->id }}" class="form-control"
-                                            value="{{ $product->harga_modal }}" required>
+                                            <input type="text" name="harga_modal"
+                                                id="edit_harga_modal{{ $product->id }}" class="form-control"
+                                                value="{{ $product->harga_modal }}" required>
                                             <div class="input-group-append">
                                                 <span class="input-group-text">.00</span>
                                             </div>
@@ -349,8 +350,8 @@
                                     <textarea name="description" id="edit_description{{ $product->id }}" class="form-control">{{ $product->description }}</textarea>
                                 </div>
                             </div>
-                            
-                            
+
+
                         </div>
                         <button type="submit" class="btn btn-primary">Update Product</button>
                         </form>
@@ -362,96 +363,125 @@
 @endsection
 
 @push('scripts')
-    <!-- Include SweetAlert JS -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-    <!-- Include DataTables JS -->
-    <script src="https://cdn.datatables.net/1.11.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/2.0.7/js/dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/2.0.7/js/dataTables.bootstrap5.min.js"></script>
+
 
     <script>
-        function deleteProduct(event, productId) {
-            event.preventDefault(); // Prevent default form submission
-
-            Swal.fire({
-                title: 'Are you sure?',
-                text: 'You will not be able to recover this product!',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#d33',
-                cancelButtonColor: '#3085d6',
-                confirmButtonText: 'Yes, delete it!',
-                cancelButtonText: 'Cancel'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    // Submit the delete form
-                    $('#delete-form-' + productId).submit();
-                }
-            });
-        }
-
         $(document).ready(function() {
-            // Function to handle displaying Sweet Alert for errors
-            function showErrorAlert(errorMessage) {
-                Swal.fire({
-                    title: 'Error!',
-                    html: errorMessage,
-                    icon: 'error'
-                });
-            }
-
-            // Handle success message after deletion
-            var successMessage = '{{ session('success') }}';
-            if (successMessage) {
-                Swal.fire({
-                    title: 'Success!',
-                    text: successMessage,
-                    icon: 'success',
-                    timer: 2000 // Set the timer for auto-close
-                });
-            }
-
-            // Ajax setup for handling errors
-            $.ajaxSetup({
-                error: function(xhr) {
-                    var errorMessage = '';
-                    if (xhr.responseJSON && xhr.responseJSON.errors) {
-                        // If there are validation errors, display validation error message
-                        var errors = xhr.responseJSON.errors;
-                        errorMessage = '<ul>';
-                        $.each(errors, function(key, value) {
-                            errorMessage += '<li>' + value + '</li>';
-                        });
-                        errorMessage += '</ul>';
-                    } else if (xhr.responseJSON && xhr.responseJSON.error) {
-                        // If there is an error message, display it
-                        errorMessage = xhr.responseJSON.error;
-                    } else {
-                        // If no defined error message, display a generic error message
-                        errorMessage = 'An error occurred. Please try again later.';
+            $('#products-table').DataTable({
+                "pagingType": "full_numbers",
+                "lengthMenu": [10, 25, 50, 75, 100],
+                "language": {
+                    "search": "Cari:",
+                    "lengthMenu": "Tampilkan _MENU_ entri",
+                    "info": "Menampilkan _START_ hingga _END_ dari _TOTAL_ entri",
+                    "paginate": {
+                        "first": "Pertama",
+                        "last": "Terakhir",
+                        "next": "Berikutnya",
+                        "previous": "Sebelumnya"
                     }
-                    // Show the error message using Sweet Alert
-                    showErrorAlert(errorMessage);
                 }
             });
 
-            // Handle stock addition form submission with AJAX
-            $('#stockInForm').on('submit', function(event) {
-                event.preventDefault();
+            // $('.detail-button').click(function() {
+            //     var kode = $(this).data('id');
+            //     $.ajax({
+            //         url: '/konfirmasi-belanja/detail/' + kode,
+            //         method: 'GET',
+            //         success: function(data) {
+            //             var rows = '';
+            //             data.forEach(function(item) {
+            //                 var status = '';
+            //                 if (item.acc === 1) {
+            //                     status =
+            //                         '<button class="btn btn-sm btn-success">Di Setujui</button>';
+            //                 } else if (item.acc === 0) {
+            //                     status =
+            //                         '<button class="btn btn-sm btn-danger">Tidak Disetujui</button>';
+            //                 } else {
+            //                     status =
+            //                         '<button class="btn btn-sm btn-warning">Belum Disetujui</button>';
+            //                 }
+
+            //                 rows += '<tr>' +
+            //                     '<td>' + item.products.name + '</td>' +
+            //                     '<td>' + item.qty + '</td>' +
+            //                     '<td>' + item.harga + '</td>' +
+            //                     '<td>' + item.tempat + '</td>' +
+            //                     '<td>' + item.sub_total + '</td>' +
+            //                     '<td>' + status + '</td>' +
+            //                     '<td>' +
+            //                     '<button type="button" class="btn btn-primary btn-sm edit-status-button" data-toggle="modal" data-target="#editStatusModal" data-detail-id="' +
+            //                     item.id + '">' +
+            //                     '<i class="fa-solid fa-pen-to-square"></i> Ubah Status' +
+            //                     '</button>' +
+            //                     '</td>' +
+            //                     '</tr>';
+            //             });
+            //             $('#detail-table-body').html(rows);
+            //         }
+            //     });
+            // });
+
+            // Penanganan ketika tombol 'Ubah Status' diklik
+            // $(document).on('click', '.edit-status-button', function() {
+            //     var detailId = $(this).data('detail-id');
+            //     $('#editStatusModal').modal('show');
+            //     $('#editStatusModal').data('detail-id', detailId);
+            // });
+
+            // Penanganan ketika tombol 'Simpan' di modal diklik untuk mengubah status
+            $('#saveStatusButton').click(function() {
+                var detailId = $('#editStatusModal').data('detail-id');
+                var newStatus = $("input[name='acc']:checked").val();
                 $.ajax({
-                    url: '{{ route('stock.store') }}',
+                    url: '/konfirmasi-belanja/ubah-status',
                     method: 'POST',
-                    data: $(this).serialize(),
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        id: detailId,
+                        acc: newStatus
+                    },
+                    dataType: 'json',
                     success: function(response) {
-                        $('#stockInModal').modal('hide');
-                        Swal.fire({
-                            title: 'Success!',
-                            text: 'Stock has been added successfully.',
-                            icon: 'success',
-                            timer: 2000
-                        }).then(() => {
-                            location.reload(); // Reload the page to reflect the changes
-                        });
+                        if (response.success) {
+                            $('#editStatusModal').modal('hide');
+                            Swal.fire('Berhasil!', 'Status berhasil diubah.', 'success').then(
+                                function() {
+                                    location
+                                        .reload(); // Refresh tampilan setelah berhasil mengubah status
+                                });
+                        } else {
+                            Swal.fire('Gagal!', 'Terjadi kesalahan saat mengubah status.',
+                                'error');
+                        }
+                    },
+                    error: function(err) {
+                        Swal.fire('Error!', 'Terjadi kesalahan saat menghubungi server.',
+                            'error');
                     }
                 });
+            });
+        });
+        $('#stockInForm').on('submit', function(event) {
+            event.preventDefault();
+            $.ajax({
+                url: '{{ route('stock.store') }}',
+                method: 'POST',
+                data: $(this).serialize(),
+                success: function(response) {
+                    $('#stockInModal').modal('hide');
+                    Swal.fire({
+                        title: 'Success!',
+                        text: 'Stock has been added successfully.',
+                        icon: 'success',
+                        timer: 2000
+                    }).then(() => {
+                        location.reload(); // Reload the page to reflect the changes
+                    });
+                }
             });
         });
     </script>

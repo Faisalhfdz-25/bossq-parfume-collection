@@ -46,7 +46,8 @@
                                         </div>
                                         <hr>
                                         <div class="d-flex justify-content-end">
-                                            <button type="submit" class="btn btn-md btn-primary"><i class="fa fa-paper-plane"></i>
+                                            <button type="submit" class="btn btn-md btn-primary"><i
+                                                    class="fa fa-paper-plane"></i>
                                                 Ajukan
                                             </button>
                                         </div>
@@ -85,10 +86,14 @@
                                                         <td>{{ $item->tempat }}</td>
                                                         <td>{{ $item->sub_total }}</td>
                                                         <td>
-                                                            @if ($item->acc == 1)
+                                                           
+                                                            @if ($item->acc === 1)
                                                                 <button class="btn btn-sm btn-success">Di Setujui</button>
-                                                            @else
+                                                            @elseif ($item->acc === 0)
                                                                 <button class="btn btn-sm btn-danger">Tidak
+                                                                    Disetujui</button>
+                                                            @else
+                                                                <button class="btn btn-sm btn-warning">Belum
                                                                     Disetujui</button>
                                                             @endif
                                                         </td>
