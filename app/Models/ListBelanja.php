@@ -9,4 +9,9 @@ class ListBelanja extends Model
 {
     use HasFactory;
     protected $table = 'list_belanja';
+
+    public function detailListBelanja()
+    {
+        return $this->hasMany(DetailListBelanja::class, 'id');
+    }
 }

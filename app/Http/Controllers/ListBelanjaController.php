@@ -53,7 +53,7 @@ class ListBelanjaController extends Controller
             $data->tempat = $request->tempat;
             $data->qty = $request->qty;
             $data->sub_total = $request->sub_total;
-            $data->acc = 0;
+            $data->acc = null;
 
 
             if ($data->save()) {
@@ -78,7 +78,7 @@ class ListBelanjaController extends Controller
         $data->tanggal = Carbon::now('Asia/Jakarta');
         
         
-        $totalItem = DetailListBelanja::count();
+        $totalItem = DetailListBelanja::where('kode', $request->kode)->count();
         $data->total_items = $totalItem;
         
         
