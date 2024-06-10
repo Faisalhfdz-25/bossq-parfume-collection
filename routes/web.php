@@ -11,7 +11,7 @@ use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\ListBelanjaController;
 
 use App\Http\Controllers\ProductCategoryController;
-
+use App\Http\Controllers\TransaksiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -71,6 +71,10 @@ Route::middleware(['auth','admin'])->group(function () {
     Route::controller(BarangMasukController::class)->group(function () {
         Route::get('/barang-masuk', 'index');
         Route::post('/barang-masuk/simpan', 'simpan');
+    });
+
+    Route::controller(TransaksiController::class)->group(function () {
+        Route::get('/transaksi', 'index');
     });
 });
 

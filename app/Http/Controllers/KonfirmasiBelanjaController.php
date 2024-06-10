@@ -70,25 +70,17 @@ class KonfirmasiBelanjaController extends Controller
             'details' => $details
         ];
 
-         
-         $html = view('pages.konfirmasi_belanja.print', $data)->render();
+        $html = view('pages.konfirmasi_belanja.print', $data)->render();
 
-        
-         $options = new Options();
-         $options->set('isHtml5ParserEnabled', true);
-         $options->set('isRemoteEnabled', true);
- 
-        
-         $dompdf = new Dompdf($options);
-         $dompdf->loadHtml($html);
- 
-        
-         $dompdf->setPaper('A4', 'portrait');
- 
-         
-         $dompdf->render();
- 
-         
-         return $dompdf->stream($kode.'.pdf', ['Attachment' => false]);
+        $options = new Options();
+        $options->set('isHtml5ParserEnabled', true);
+        $options->set('isRemoteEnabled', true);
+
+        $dompdf = new Dompdf($options);
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4', 'portrait');
+        $dompdf->render();
+
+        return $dompdf->stream($kode . '.pdf', ['Attachment' => false]);
     }
 }
