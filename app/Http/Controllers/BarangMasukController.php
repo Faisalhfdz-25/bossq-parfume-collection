@@ -35,7 +35,7 @@ class BarangMasukController extends Controller
             $data->harga_per_unit = $request->harga_per_unit;
             $data->total_harga = $request->total_harga;
             $data->catatan = $request->catatan;
-            
+            Log::info('Data BarangMasuk:', $data->toArray());
 
 
             if ($data->save()) {
@@ -48,7 +48,7 @@ class BarangMasukController extends Controller
                         $product->harga_modal = $request->harga_per_unit;
                     }
     
-                    
+                    Log::info('Produk Update:', $product->toArray());
                     if ($product->save()) {
                         DB::commit();
                         return redirect('/barang-masuk')->with('Save', 'Data Berhasil Disimpan');
@@ -66,7 +66,7 @@ class BarangMasukController extends Controller
             }
         } catch (\Throwable $th) {
             DB::rollback();
-            
+            Log::error('Error saving BarangMasuk:', ['message' => $th->getMessage()]);
             return redirect('/barang-masuk')->with('Error', 'Terjadi kesalahan: ' . $th->getMessage());
         }
         

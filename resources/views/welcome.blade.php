@@ -107,6 +107,9 @@
                   <a class="nav-link p-0" href="#faqs">Faqs</a>
                 </li>
                 <li class="nav-item">
+                  <a class="nav-link p-0" href="/login">Login</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link p-0" href="#faqs">Shop</a>
                   </li>
               </ul>

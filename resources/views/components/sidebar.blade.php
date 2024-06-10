@@ -51,15 +51,15 @@
             {{-- <li class="menu-header">Belanja</li> --}}
             {{-- <li class="nav-item dropdown {{ $type_menu === 'layout' ? 'active' : '' }}"> --}}
                 <li class="{{ Request::is('list-belanja') ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ url('/list-belanja') }}"><i class=" fas fa-solid fa-file-pen"></i>List Belanja</a>
+                    <a class="nav-link" href="{{ url('/list-belanja') }}"><i class=" fas fa-solid fa-file-pen"></i><span>List Belanja</span></a>
                 </li>
             </li>
             
             <li class="{{ Request::is('konfirmasi-belanja') ? 'active' : '' }}">
-                <a class="nav-link" href="{{ url('/konfirmasi-belanja') }}"><i class=" fas fa-solid fa-clipboard-check"></i>Konfirmasi Belanja</a>
+                <a class="nav-link" href="{{ url('/konfirmasi-belanja') }}"><i class=" fas fa-solid fa-clipboard-check"></i><span>Konfirmasi Belanja</span></a>
             </li>
             <li class="{{ Request::is('barang-masuk') ? 'active' : '' }}">
-                <a class="nav-link" href="{{ url('/barang-masuk') }}"><i class=" fas fa-solid fa-cart-shopping"></i></i>Barang Masuk</a>
+                <a class="nav-link" href="{{ url('/barang-masuk') }}"><i class=" fas fa-solid fa-cart-shopping"></i></i><span>Barang Masuk</span></a>
             </li>
             <hr width="80%">
             <li class="menu-header">Transaksi</li>
@@ -68,8 +68,8 @@
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-solid fa-cash-register"></i></i>
                     <span>Data Transaksi</span></a>
                 <ul class="dropdown-menu">
-                    <li class="{{ Request::is('layout-default-layout') ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ url('layout-default-layout') }}"><i
+                    <li class="{{ Request::is('/transaksi') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ url('/transaksi') }}"><i
                                 class="fas fa-solid fa-hand-holding-dollar"></i>Trasaksi</a>
                     </li>
 
